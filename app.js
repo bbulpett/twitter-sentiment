@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -51,10 +53,10 @@ app.get('/testSentiment',
 
 // Connect to Twitter
 var tweeter = new twitter({
-  consumer_key: 'foZdopLnng9OfAKFMmEdVDRcE',
-  consumer_secret: 'toaXpJK3IlRkpwLqCZnson8KghSRyMJsRFvCC9Tr4QLp0uYfI7',
-  access_token_key: '4220578361-NBTQmC4aNZXEiXHW6TCDOTx3FhxIRZUYNEb0K3N',
-  access_token_secret: 'aFp4zGJkMuWrTnN4e9LzN4trGcpnpK6JLAqU4f6D29awE'
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token_key: process.env.ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
 
 });
 
