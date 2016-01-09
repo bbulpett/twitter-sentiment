@@ -10,6 +10,13 @@ var users = require('./routes/users');
 
 var app = express();
 
+var port = 3000;
+app.get('/hello', function(req, res) {
+  res.send("Hello world");
+});
+
+app.listen(port);
+console.log("Server listening on port " + port);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -58,3 +65,4 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
