@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var twitter = require('ntwitter');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -47,6 +48,21 @@ app.get('/testSentiment',
       });
     }
   });
+
+// Connect to Twitter
+var tweeter = new twitter({
+  consumer_key: 'foZdopLnng9OfAKFMmEdVDRcE',
+  consumer_secret: 'toaXpJK3IlRkpwLqCZnson8KghSRyMJsRFvCC9Tr4QLp0uYfI7',
+  access_token_key: '4220578361-NBTQmC4aNZXEiXHW6TCDOTx3FhxIRZUYNEb0K3N',
+  access_token_secret: 'aFp4zGJkMuWrTnN4e9LzN4trGcpnpK6JLAqU4f6D29awE'
+
+});
+
+app.get('/twitterCheck', function (req, res) {
+  tweeter.verifyCredentials(function (error, data) {
+    res.send("Hello, " + data.name + ". I am in your twitters.");
+  });
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
