@@ -57,12 +57,36 @@ var tweeter = new twitter({
   consumer_secret: process.env.CONSUMER_SECRET,
   access_token_key: process.env.ACCESS_TOKEN_KEY,
   access_token_secret: process.env.ACCESS_TOKEN_SECRET
-
 });
 
 app.get('/twitterCheck', function (req, res) {
   tweeter.verifyCredentials(function (error, data) {
     res.send("Hello, " + data.name + ". I am in your twitters.");
+  });
+});
+
+// The "watchTwitter" route
+app.get('/watchTwitter', function(req,res) {
+  var stream;
+  var testTweetCount = 0;
+  var phrase = 'bieber';
+  tweeter.verifyCredentials(function(error, data) {
+    if (error){
+      res.send("Error connecting to Twitter: " + error);
+      }
+      stream = tweeter.stream('statuses/filter', {
+        'track': phrase
+      }, function (stream) {
+        res.send("Monitoring Twitter for \'"
+           + phrase + "\'... Logging Twitter traffic.");
+        stream.on('data', function (data) {
+          testTweetCount++;
+          // Update the console every 50 analyzed tweets
+          if (testTweetCount % 50 === 0) {
+            console.log ("Tweet #" + testTweetCount + ": " + data.text);
+          }
+        });
+    });
   });
 });
 
